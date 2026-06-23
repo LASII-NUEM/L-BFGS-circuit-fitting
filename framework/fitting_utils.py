@@ -1,6 +1,6 @@
 from framework import characterization_utils, data_types, equivalent_circuits, optimization_utils, script_to_overwrite_local_impedancedotpy_files
 import numpy as np
-from scipy.optimize import curve_fit, minimize, least_squares
+from scipy.optimize import minimize, least_squares
 import time
 
 #dictionary to handle function calls -> number of expected params and the function pointer
@@ -30,8 +30,7 @@ function_handlers = {
                             "fit_params": ["R1", "R2", "tau1", "n1"]},
     "hobbes1974": {"n_params": 4, "function_ptr": equivalent_circuits.Hobbes1974, "bounds": [(0,10), (0,10), (0,10), (0,10)],
                                 "fit_params": ["R1", "R2", "C2", "C1"]},
-    "sun2022": {"n_params": 2, "function_ptr": equivalent_circuits.Sun2022,
-                   "bounds": [(0, 10), (0, 10)],
+    "sun2022": {"n_params": 2, "function_ptr": equivalent_circuits.Sun2022, "bounds": [(0, 10), (0, 10)],
                    "fit_params": ["R1", "C1"]}
 }
 

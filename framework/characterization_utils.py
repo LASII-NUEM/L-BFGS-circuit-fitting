@@ -65,41 +65,6 @@ def dielectric_params_corrected(data_medium:data_types.SpectroscopyData, data_ai
 
     return np.real(eps_medium), np.abs(np.imag(eps_medium))
 
-def dielectric_params_Artemov2013(freqs: np.ndarray, medium='ice'):
-    '''
-    :param freqs: array with the swept frequencies
-    :param medium: which medium to generate the reference curves
-    :return: the real and complex parts of the ideal dielectric parameters for the characterized medium
-    '''
-
-    #V.G. Artemov, A.A. Volkov, 2013.
-    #Water and Ice Dielectric Spectra at 0°C
-
-    #validate freqs
-    if type(freqs) != np.ndarray:
-        raise TypeError(f'[dielectric_params_Artemov2013] "freqs" must be a Numpy Array! Curr. type = {type(freqs)}')
-
-    #validate medium
-    medium = medium.lower() #convert to lowercase
-    valid_media = ["water", "ice"]
-    if medium not in valid_media:
-        raise ValueError(f'[dielectric_params_Artemov2013] "medium" = {medium} not implemented! Try: {valid_media}')
-
-    if medium == "ice":
-        eps_inf = 3 #high frequency limit
-        delta_epsd = 93 #contribution of the dielectric relaxation to the static dielectric constant
-        tau_d = 2.2e-5 #relaxation time
-    elif medium == "water":
-        eps_inf = 5 #high frequency limit
-        delta_epsd = 83 #contribution of the dielectric relaxation to the static dielectric constant
-        tau_d = 1.7e-11 #relaxation time
-
-    omegas = 2*np.pi*freqs #Hz to rad/s
-    eps_line_ideal = eps_inf + (delta_epsd/(1 + (omegas**2)*(tau_d**2))) #real part of the permittivity
-    eps_2line_ideal = (omegas*tau_d)*(delta_epsd/(1 + (omegas**2)*(tau_d**2))) #imaginary part of the permittivity
-
-    return eps_line_ideal, eps_2line_ideal
-
 def complex_impedance(data_medium:data_types.SpectroscopyData, freqs:np.ndarray):
     '''
     :param data_medium: SpectrumData structure for the frequency sweep in the medium to be characterized
@@ -165,31 +130,3 @@ def complex_conductivity(data_medium:data_types.SpectroscopyData, data_air:data_
         sigma_2line_medium = omegas[:,np.newaxis]*eps0*eps_real #real conductivity
 
     return sigma_line_medium, sigma_2line_medium
-
-def dielectric_modulus(data_medium:data_types.SpectroscopyData, data_air:data_types.SpectroscopyData, freqs:np.ndarray, eps_func: dielectric_params_generic):
-    '''
-    :param data_medium: SpectrumData structure for the frequency sweep in the medium to be characterized
-    :param data_air: SpectrumData structure for the frequency sweep in the air
-    :param freqs: array with the swept frequencies
-    :return: the real and complex parts of the dielectric modulus
-    '''
-
-    #validate data_medium
-    expected_types = [data_types.SpectroscopyData, data_types.CommercialCellData]
-    if type(data_medium) not in expected_types:
-        raise TypeError(f'[dielectric_params_generic] "data_medium" must be a SpectrumData structure! Curr. type = {type(data_medium)}')
-
-    #validate data_air
-    expected_types = [data_types.SpectroscopyData, data_types.CommercialCellData]
-    if type(data_air) not in expected_types:
-        raise TypeError(f'[dielectric_params_generic] "data_air" must be a SpectrumData structure! Curr. type = {type(data_air)}')
-
-    #validate freqs
-    if type(freqs) != np.ndarray:
-        raise TypeError(f'[dielectric_params_generic] "freqs" must be a Numpy Array! Curr. type = {type(freqs)}')
-
-    eps_real, eps_imag = eps_func(data_medium, data_air, freqs) #compute the complex permittivity
-    eps = (eps_real + 1j*eps_imag).astype('complex')
-    M = 1/eps #M = 1/ε
-
-    return M.real, M.imag

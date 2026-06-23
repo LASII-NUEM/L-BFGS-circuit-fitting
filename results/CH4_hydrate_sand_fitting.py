@@ -19,8 +19,8 @@ ucsd_obj = file_ucsd.read(filename)
 #Linear Kramers-Kronig with overfitting criterion
 linKK = fitting_utils.LinearKramersKronig([ucsd_obj.z_meas_real, ucsd_obj.z_meas_imag], ucsd_obj.freqs, c=0.5, max_iter=100, add_capacitor=True, verbose=False)
 print(f'[Linear Kramers-Kronig] M = {linKK.fit_components}')
-print(f'[Linear Kramers-Kronig] Δ real = {np.mean(linKK.fit_residues_real)}')
-print(f'[Linear Kramers-Kronig] Δ imag = {np.mean(linKK.fit_residues_imag)}')
+print(f'[Linear Kramers-Kronig] Δ real = {np.mean(linKK.fit_residues_real)}%')
+print(f'[Linear Kramers-Kronig] Δ imag = {np.mean(linKK.fit_residues_imag)}%')
 
 #initial arguments
 circuits = {"Lu2019_2CPE": {"guess": np.array([1, 1, 0.5, 1, 1, 0.5]),

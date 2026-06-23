@@ -30,8 +30,8 @@ Z_meas = Z_meas.astype('complex')
 #Linear Kramers-Kronig with overfitting criterion
 linKK = fitting_utils.LinearKramersKronig([Z_meas.real, -Z_meas.imag], freqs, c=0.5, max_iter=100, add_capacitor=True, verbose=False)
 print(f'[Linear Kramers-Kronig] M = {linKK.fit_components}')
-print(f'[Linear Kramers-Kronig] Δ real = {np.mean(linKK.fit_residues_real)}')
-print(f'[Linear Kramers-Kronig] Δ imag = {np.mean(linKK.fit_residues_imag)}')
+print(f'[Linear Kramers-Kronig] Δ real = {np.mean(linKK.fit_residues_real)}%')
+print(f'[Linear Kramers-Kronig] Δ imag = {np.mean(linKK.fit_residues_imag)}%')
 
 circuits = {"Longo2020": {"guess": np.array([1, 1, 1, 1, 1, 1, 0.5, 1]),
                           "scale_BFGS": np.array([1e5, 1e-4, 1e-2, 1e-11, 1e5, 1, 1, 1e-8]),

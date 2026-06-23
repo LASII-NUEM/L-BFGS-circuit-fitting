@@ -448,7 +448,6 @@ class PHOBOSData:
                 self.agg_Cp_norm[:,f] = aggregate(self.Cp_norm[:,:,f], axis=1)
                 self.agg_Rp_norm[:, f] = aggregate(self.Rp_norm[:, :, f], axis=1)
 
-
 class IAData:
     def __init__(self, filename_electrode:str, filename_temperature=None, n_samples=1, normalize=False, temp_setup="freezer", electrode="flange", acquisition_mode="freq", aggregate=None, timezone=-3):
         '''
@@ -502,4 +501,3 @@ class UCSData:
         self.freqs = data[:,-1] #frequencies of the EIS sweep
         self.z_meas_real = data[:,0] #measured real parts of the impedance
         self.z_meas_imag = data[:,1] #measured imaginary parts of the impedance
-
