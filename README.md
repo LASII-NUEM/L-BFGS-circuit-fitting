@@ -12,7 +12,7 @@ git clone https://github.com/LASII-NUEM/L-BFGS_circuit_fitting.git
 cd L-BFGS_circuit_fitting
 ```
 
-Then, configure a Python environment. The framework has been successfully tested in Python 3.12, and 3.13. Also, in both Linux and Windows operating systems. Lastly, install the required packages listed in the requirements text file at the root of the repository with:
+Then, configure a Python environment. The framework has been successfully tested in Python 3.12 and 3.13. Also, in both Linux and Windows operating systems. Lastly, install the required packages listed in the requirements text file at the root of the repository with:
 
 ```
 pip install -r requirements.txt
@@ -27,7 +27,7 @@ This repository provides the raw data for the four different hydrate-oriented sp
 - [`Ice from distilled water`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/data/ice/ice_distilled_E4980_LCR): Distilled water placed in a 16452A test fixture and frozen in a commercial freezer for approximately 3 hours. Acquisition hardware:  Keysight E4980 LCR meter.
 
 ## Reproducing the paper results
-All the results presented in the paper can be reproduced by the scripts provided in the (`results`)[https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/results] directory. For each sample, an individual script is provided that can be run independently. The only infrastructure requirement is to have the [`framework`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/framework) recognized by the scripts and the raw data in an accessible directory (e.g., [`data`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/data) at the root). Except for `time_benchmark.py`, which reproduces the results in Table II, the other scripts pertain to Fig. 2 and Table I of the paper. With the environment activated, run each script in the terminal with:
+All the results presented in the paper can be reproduced by the scripts provided in the [`results`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/results) directory. For each sample, an individual script is provided that can be run independently. The only infrastructure requirement is to have the [`framework`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/framework) recognized by the scripts and the raw data in an accessible directory (e.g., [`data`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/tree/main/data) at the root). Except for [`time_benchmark.py`](https://github.com/LASII-NUEM/L-BFGS_circuit_fitting/blob/main/results/time_benchmarks.py), which reproduces the results in Table II, the other scripts pertain to Fig. 2 and Table I of the paper. With the environment activated, run each script in the terminal with:
 ```
 python3 ./<result_script_name>.py 
 ```
