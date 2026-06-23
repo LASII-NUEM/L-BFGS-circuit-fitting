@@ -1,4 +1,11 @@
 import os
+import sys
+
+#ensure framework is identified when running in terminal
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
 from framework import batch_utils, fitting_utils, file_ucsd
 from scipy.io import loadmat
 import numpy as np
@@ -128,9 +135,9 @@ def fit_ice(filepath, model):
     return timestamps
 
 #filepaths with the spectra
-ch4_file = f'../data/test_UCSD_hydrates/SH3.5_Sa50_-18C_Spectrum.txt'
-ch4_sand_file = f'../data/test_UCSD_hydrates/SH3.5_-20C_spectrum.txt'
-thf_file = '../data/tetrahydrofuran_hydrate/thf_4294A_ia.mat'
+ch4_file = os.path.join('../data/methane_hydrate/', f'CH4_GwINSTEK_LCR_spectrum.txt')
+ch4_sand_file = os.path.join('../data/methane_hydrate/', f'CH4_sand_GwINSTEK_LCR_spectrum.txt')
+thf_file = os.path.join('../data/tetrahydrofuran_hydrate/', f'thf_4294A_ia')
 ice_files = '../data/ice' #path where all test files are stored
 
 #N independent runs to compute average computing time

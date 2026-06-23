@@ -1,4 +1,11 @@
 import os
+import sys
+
+#ensure framework is identified when running in terminal
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
 from framework import fitting_utils, file_ucsd
 import numpy as np
 import matplotlib
@@ -15,6 +22,8 @@ model = "Constable2020" #which ECM will be used to fit the data
 #load the data into a data_types.UCSData object
 filename = os.path.join(data_path, f'{sample_file}_spectrum.txt') #relative path to the CH4 hydrate data
 ucsd_obj = file_ucsd.read(filename)
+
+os.path.join('../data/methane_hydrate/', f'CH4_GwINSTEK_LCR_spectrum.txt')
 
 #Linear Kramers-Kronig with overfitting criterion
 linKK = fitting_utils.LinearKramersKronig([ucsd_obj.z_meas_real, ucsd_obj.z_meas_imag], ucsd_obj.freqs, c=0.5, max_iter=100, add_capacitor=True, verbose=False)
