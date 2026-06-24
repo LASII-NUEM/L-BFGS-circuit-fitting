@@ -5,19 +5,19 @@ import time
 
 #dictionary to handle function calls -> number of expected params and the function pointer
 function_handlers = {
-    "longo2020": {"n_params": 8, "function_ptr": equivalent_circuits.Longo2020, "partial_function_ptr": equivalent_circuits.Longo2020_partial, "bounds": [(0,10), (0,10), (0,10), (0,10), (0,10), (0,10), (0,1), (0,10)],
+    "longo2020": {"n_params": 8, "function_ptr": equivalent_circuits.Longo2020, "bounds": [(0,10), (0,10), (0,10), (0,10), (0,10), (0,10), (0,1), (0,10)],
                   "fit_params": ['R1', 'tau1', 'R2', 'tau2', 'R3', 'tau3', 'n3', 'tau4']},
-    "fouquet2005": {"n_params": 6, "function_ptr": equivalent_circuits.Fouquet2005, "partial_function_ptr": equivalent_circuits.Fouquet2005_partial, "bounds": [(0,10), (0,10), (0,10), (0,1), (0,10), (0,10)],
+    "fouquet2005": {"n_params": 6, "function_ptr": equivalent_circuits.Fouquet2005, "bounds": [(0,10), (0,10), (0,10), (0,1), (0,10), (0,10)],
                     "fit_params": ['R1', 'R2', 'Q', 'n', 'Rd', 'taud']},
-    "zurich2021": {"n_params": 7, "function_ptr": equivalent_circuits.Zurich2021, "partial_function_ptr": equivalent_circuits.Zurich2021_partial, "bounds": [(0,10), (0,10), (0,1), (0,10), (0,10), (0,10), (0,10)],
+    "zurich2021": {"n_params": 7, "function_ptr": equivalent_circuits.Zurich2021, "bounds": [(0,10), (0,10), (0,1), (0,10), (0,10), (0,10), (0,10)],
                    "fit_params": ["R1", "Q", "n", "Rd", "taud", "R2", "C"]},
-    "awayssa2025": {"n_params": 5, "function_ptr": equivalent_circuits.Awayssa2025, "partial_function_ptr": equivalent_circuits.Awayssa2025_partial, "bounds": [(0,10), (0,10), (0,10), (0,10), (0,10)],
+    "awayssa2025": {"n_params": 5, "function_ptr": equivalent_circuits.Awayssa2025, "bounds": [(0,10), (0,10), (0,10), (0,10), (0,10)],
                     "fit_params": ["R1", "R2", "C1", "L1", "C2"]},
-    "hong2021": {"n_params": 7, "function_ptr": equivalent_circuits.Hong2021, "partial_function_ptr": equivalent_circuits.Hong2021_partial, "bounds": [(0,10), (0,10), (0,1), (0,10), (0,10), (0,1), (0,10)],
+    "hong2021": {"n_params": 7, "function_ptr": equivalent_circuits.Hong2021, "bounds": [(0,10), (0,10), (0,1), (0,10), (0,10), (0,1), (0,10)],
                  "fit_params": ["R1", "Q1", "n1", "R2", "Q2", "n2", "R3"]},
-    "yang2025": {"n_params": 6, "function_ptr": equivalent_circuits.Yang2025, "partial_function_ptr": equivalent_circuits.Yang2025_partial, "bounds": [(0,10), (0,10), (0,10), (0, 1), (0,10), (0,10)],
+    "yang2025": {"n_params": 6, "function_ptr": equivalent_circuits.Yang2025, "bounds": [(0,10), (0,10), (0,10), (0, 1), (0,10), (0,10)],
                  "fit_params": ["R1", "R2", "Q", "n", "Rd", "taud"]},
-    "zhang2024": {"n_params": 6, "function_ptr": equivalent_circuits.Zhang2024, "partial_function_ptr": equivalent_circuits.Zhang2024_partial, "bounds": [(0,10), (0, 1), (0,10), (0,10), (0,10), (0,10)],
+    "zhang2024": {"n_params": 6, "function_ptr": equivalent_circuits.Zhang2024, "bounds": [(0,10), (0, 1), (0,10), (0,10), (0,10), (0,10)],
                   "fit_params": ["Q", "n", "R1", "R2", "Rd", "taud"]},
     "roberts1993": {"n_params": 4, "function_ptr": equivalent_circuits.Roberts1993, "bounds": [(0,10), (0,10), (0,10), (0,10)], "fit_params": ["R1", "C1", "R2", "C2"]},
     "lu2019_rs2cpe": {"n_params": 7, "function_ptr": equivalent_circuits.Lu2019_Rs2CPE, "bounds": [(0,10), (0,10), (0,10), (0,1), (0,10), (0,10), (0,1)],
@@ -192,9 +192,7 @@ class EquivalentCircuit:
 
         elif self.fit_method == 'DLS':
             self.circuit_impedance = function_handlers[self.topology]["function_ptr"]
-            #circuit_impedance_real = partial(self.circuit_impedance, scaling=scaling_array, return_type="real") #set scaling and return_type to static inputs
             t_init = time.time()
-            #fit_params, fit_cov = curve_fit(circuit_impedance_real, omega, self.z_meas_real, p0=initial_guess, bounds=bounds, maxfev=30000) #hacky-fix to attempt never running out of allowed iterations
             fit_obj = optimization_utils.LevenbergMarquardt(self.circuit_impedance, initial_guess, args=([self.z_meas, omega, scaling_array]), tol=tol, bounds=bounds)
             t_elapsed = time.time() - t_init
             opt_fit = self.circuit_impedance(fit_obj, [omega, scaling_array]) #compute the circuit for the optimal values
