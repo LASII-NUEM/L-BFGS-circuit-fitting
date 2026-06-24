@@ -67,9 +67,6 @@ The `fit_circuit` method returns an object of the [OptimizerResults](https://git
 - [Thiago Alberto Rigo Passarin](http://lattes.cnpq.br/1366903848418887)
 - [Eduardo Nunes dos Santos](http://lattes.cnpq.br/1324570975148136)
 
-## License
-All Python source code (.py) is made available under the MIT license. You can freely use and modify the code, without warranty, so long as you provide attribution to the authors. See LICENSE-MIT.txt for the full license text.
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
