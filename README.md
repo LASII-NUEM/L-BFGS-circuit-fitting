@@ -10,8 +10,9 @@ Gas hydrates are among the greatest concerns within deep-sea petroleum extractio
 4. [Fit it yourself!](#4-fit-it-yourself)
 5. [Related works](#5-related-works)
 6. [Repository collaborators](#6-repository-collaborators)
-7. [Contributing](#7-contributing)
-8. [Questions?](#8-questions)
+7. [License](#7-license)
+8. [Contributing](#8-contributing)
+9. [Questions?](#9-questions)
 
 # 1. Repository configuration 
 To set up the toolbox, first clone this repository on your machine:
@@ -77,8 +78,11 @@ The `fit_circuit` method returns an object of the [OptimizerResults](https://git
 - [Thiago Alberto Rigo Passarin](http://lattes.cnpq.br/1366903848418887)
 - [Eduardo Nunes dos Santos](http://lattes.cnpq.br/1324570975148136)
 
-# 7. Contributing 
+# 7. License
+All Python source code (.py) is made available under the MIT license. You can freely use and modify the code, without warranty, so long as you provide attribution to the authors. See LICENSE-MIT.txt for the full license text.
+
+# 8. Contributing 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-# 8. Questions? 
+# 9. Questions? 
 If you have any questions, please feel free to reach out via email at mateusyamada@alunos.utfpr.edu.br!
