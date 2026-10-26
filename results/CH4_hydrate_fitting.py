@@ -16,7 +16,7 @@ plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #f
 
 #input arguments
 sample_file = 'CH4_GwINSTEK_LCR' #CH4 methane synthesized from salt-water
-data_path = '../../data/methane_hydrate/'  #path where all methane-hydrate-related files are stored
+data_path = '../data/methane_hydrate/'  #path where all methane-hydrate-related files are stored
 model = "Constable2020" #which ECM will be used to fit the data
 
 #load the data into a data_types.UCSData object

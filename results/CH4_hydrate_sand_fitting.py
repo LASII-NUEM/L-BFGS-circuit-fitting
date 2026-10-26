@@ -2,7 +2,7 @@ import os
 import sys
 
 #ensure framework is identified when running in terminal
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
@@ -16,7 +16,7 @@ plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #f
 
 #input arguments
 sample_file = 'CH4_sand_GwINSTEK_LCR' #CH4 methane synthesized from salt-water mixed with sand
-data_path = '../../data/methane_hydrate/'  #path where all methane-hydrate-related files are stored
+data_path = '../data/methane_hydrate/'  #path where all methane-hydrate-related files are stored
 model = "Lu2019_2CPE" #which ECM will be used to fit the data
 
 #load the data into a data_types.UCSData object
