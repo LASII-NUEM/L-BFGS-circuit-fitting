@@ -2,7 +2,7 @@ import os
 import sys
 
 #ensure framework is identified when running in terminal
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
@@ -16,7 +16,7 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #font configuration (same as paper)
 
 #input arguments
-filename = '../data/tetrahydrofuran_hydrate/thf_4294A_ia.mat' #path where all test files are stored
+filename = '../../data/tetrahydrofuran_hydrate/thf_4294A_ia.mat'  #path where all test files are stored
 model = "Longo2020" #which ECM will be used to fit the data
 reject_freqs = 100 #reject all frequencies up to the given argument
 

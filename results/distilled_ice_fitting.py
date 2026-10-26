@@ -2,7 +2,7 @@ import os
 import sys
 
 #ensure framework is identified when running in terminal
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
@@ -16,7 +16,7 @@ plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #f
 
 #input arguments
 sample_name = 'distilled'
-data_path = '../data/ice/' #path where all methane-hydrate-related files are stored
+data_path = '../../data/ice/'  #path where all methane-hydrate-related files are stored
 model = "Lu2019_2CPE" #which ECM will be used to fit the data
 reject_freqs = 100 #reject all frequencies up to the given argument
 

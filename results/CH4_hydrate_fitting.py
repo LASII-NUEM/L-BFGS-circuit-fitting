@@ -16,14 +16,14 @@ plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #f
 
 #input arguments
 sample_file = 'CH4_GwINSTEK_LCR' #CH4 methane synthesized from salt-water
-data_path = '../data/methane_hydrate/' #path where all methane-hydrate-related files are stored
+data_path = '../../data/methane_hydrate/'  #path where all methane-hydrate-related files are stored
 model = "Constable2020" #which ECM will be used to fit the data
 
 #load the data into a data_types.UCSData object
 filename = os.path.join(data_path, f'{sample_file}_spectrum.txt') #relative path to the CH4 hydrate data
 ucsd_obj = file_ucsd.read(filename)
 
-os.path.join('../data/methane_hydrate/', f'CH4_GwINSTEK_LCR_spectrum.txt')
+os.path.join('../../data/methane_hydrate/', f'CH4_GwINSTEK_LCR_spectrum.txt')
 
 #Linear Kramers-Kronig with overfitting criterion
 linKK = fitting_utils.LinearKramersKronig([ucsd_obj.z_meas_real, ucsd_obj.z_meas_imag], ucsd_obj.freqs, c=0.5, max_iter=100, add_capacitor=True, verbose=False)
