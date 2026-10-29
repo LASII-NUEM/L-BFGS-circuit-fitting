@@ -120,37 +120,6 @@ def LongoRed2020(theta, args):
 
     return 1/((1/R3)+Z_CPE+Z_C2)
 
-def LongoLog2020(theta, args):
-    '''
-    :param theta: list with all the candidate values
-    :param args: list with all the arguments that won't be minimized
-    :return: impedance for the equivalent R||C - C || (R - R||CPE) circuit
-    '''
-
-    #expand thetas into the components with scaling
-    if theta.ndim >= 2:
-        omega = args[0][:, np.newaxis] #rad/s
-    else:
-        theta = np.atleast_2d(theta)
-        omega = args[0] #rad/s
-
-    theta = np.array(theta)*args[1] #scaling
-    R1 = theta[:,0]
-    C1 = theta[:,1]
-    R2 = theta[:,2]
-    C2 = theta[:,3]
-    R3 = theta[:,4]
-    Q = 10**theta[:,5]
-    n3 = theta[:,6]
-
-    #impedance computation
-    Z_b1 = R1/(1+1j*omega*R1*C1) #p(R1,C1) block
-    Z_b2n = R2 + (R3/(1+R3*Q*(1j*omega)**n3)) #num of the p(C2, R2-p(R3, CPE)) block
-    Z_b2d = 1 + 1j*omega*R2*C2 + (1j*omega*C2*R3)/(1 + R3*Q*(1j*omega)**n3) #den of the p(C2, R2-p(R3, CPE)) block
-    Z_b2 = Z_b2n/Z_b2d #p(C2, R2-p(R3, CPE)) block
-
-    return Z_b1 + Z_b2
-
 def Zurich2021(theta, args):
     '''
     :param theta: list with all the candidate values
@@ -435,6 +404,34 @@ def Lu2019_2CPE(theta, args):
     #impedance computation
     Z_diff1 = R1/(1 + tau1*((1j*omega)**n1))
     Z_diff2 = R2/(1 + tau2*((1j*omega)**n2))
+
+    return Z_diff1 + Z_diff2
+
+def Lu2019_Adp2CPE(theta, args):
+    '''
+    :param theta: list with all the candidate values
+    :param args: list with all the arguments that won't be minimized
+    :return: impedance for the equivalent R1||CPE1 + R2||CPE2
+    '''
+
+    #expand thetas into the components with scaling
+    if theta.ndim >= 2:
+        omega = args[0][:, np.newaxis] #rad/s
+    else:
+        theta = np.atleast_2d(theta)
+        omega = args[0] #rad/s
+
+    theta = np.array(theta) * args[1] #scaling
+    R1 = theta[:,0]
+    Q1 = theta[:,1]
+    n1 = theta[:,2]
+    R2 = theta[:,3]
+    Q2 = theta[:,4]
+    n2 = theta[:,5]
+
+    #impedance computation
+    Z_diff1 = R1/(1 + R1*Q1*((1j*omega)**n1))
+    Z_diff2 = R2/(1 + R2*Q2*((1j*omega)**n2))
 
     return Z_diff1 + Z_diff2
 

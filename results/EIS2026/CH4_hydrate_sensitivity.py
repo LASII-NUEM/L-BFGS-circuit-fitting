@@ -1,7 +1,6 @@
 import os
 from framework import fitting_utils, file_ucsd, sensitivity_utils
 import numpy as np
-import seaborn as sns
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
@@ -15,13 +14,12 @@ model = "Constable2020" #which ECM will be used to fit the data
 
 #initial arguments
 circuits = {"Constable2020": {"guess": np.array([1, 1, 1, 0.5]),
-                              "scale_BFGS": np.array([1e3, 1e2, 1e-3, 1]),
-                              "scale_NLLS": np.array([1e2, 1e2, 1e-5, 1]),
-                              "scale_NelderMead": np.array([1e2, 1e2, 1e-5, 1]),
-                              "scale_PSO": np.array([1e2, 1e2, 1e-5, 1])}} #dictionary with initial guess and scaling arrays
+                              "scale_BFGS": np.array([1e3, 1e2, 1e-3, 1])},
+            "Constable2020_LogCPE": {"guess": np.array([1, 1, 1, 0.5]),
+                              "scale_BFGS": np.array([1e3, 1e2, -3, 1])}} #dictionary with initial guess and scaling arrays
 
 #MonteCarlo bias analysis
-n_spectra = 1e2 #number of simulations
+n_spectra = 1e4 #number of simulations
 verbose = False
 proc_parallel = True #compute the simulations in parallel
 cores = -1 #number of cors (-1 utilizes all)
@@ -76,13 +74,9 @@ if __name__ == '__main__':
     params = fitting_utils.function_handlers[model.lower()]["fit_params"]
 
     print(f'[IdentifiabilityAnalysis] Uncertainty:')
-    print("-" * 72)
-    print(f"{'Parameter':<12} | {'Theta REAL':<15} | {'Theta mean':<15} | {'Theta std.':<15} | {'Rel. bias':<12} | {'CRLB':<12}")
-    print("-" * 72)
     for name, val_real, val_phys, err_abs, rel_bias, err_pct in zip(params, theta*scaling_array_BFGS,
                                                 fit_mean, fit_std, relat_bias, sens_obj.rel_std):
-        print(f"{name:<12} | {val_real} | {val_phys} | ± {err_abs} | ± {rel_bias} | {err_pct}")
-    print("-" * 72)
+        print(f"{name} | {val_real} | {val_phys} | ± {err_abs} | ± {rel_bias} | {err_pct}")
 
     #Nyquist plots with measured and fitted data
     fig, ax = plt.subplots()
@@ -117,11 +111,4 @@ if __name__ == '__main__':
     plt.ylabel('Im(S^Z_theta)')
     plt.legend()
     plt.grid()
-    plt.show()
-
-    #plot the parameter correlation matrix
-    plt.figure()
-    sns.heatmap(sens_obj.correlation, annot=True, fmt=".2f", cmap="coolwarm", vmin=-1, vmax=1,
-                xticklabels=plot_params, yticklabels=plot_params)
-    plt.tight_layout()
     plt.show()

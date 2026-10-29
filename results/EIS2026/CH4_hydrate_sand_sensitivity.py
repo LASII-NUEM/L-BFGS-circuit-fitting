@@ -10,16 +10,18 @@ plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif'] #f
 #input arguments
 sample_file = 'CH4_sand_GwINSTEK_LCR' #CH4 methane synthesized from salt-water mixed with sand
 data_path = '../../data/methane_hydrate/' #path where all methane-hydrate-related files are stored
-model = "Lu2019_2logCPE" #which ECM will be used to fit the data
+model = "Lu2019_Adp2CPE" #which ECM will be used to fit the data
 
 #initial arguments
 circuits = {"Lu2019_2CPE": {"guess": np.array([1, 1, 0.5, 1, 1, 0.5]),
-                               "scale_BFGS": np.array([1e3, 1e-3, 1, 1e3, 1e-5, 1])},
+                            "scale_BFGS": np.array([1e3, 1e-3, 1, 1e3, 1e-5, 1])},
+            "Lu2019_Adp2CPE": {"guess": np.array([1, 1, 0.5, 1, 1, 0.5]),
+                               "scale_BFGS": np.array([1e3, 1e-6, 1, 1e4, 1e-5, 1])},
             "Lu2019_2logCPE": {"guess": np.array([1, 1, 0.5, 1, 1, 0.5]),
-                                "scale_BFGS": np.array([1e3, -3, 1, 1e3, -5, 1])}} #dictionary with initial guess and scaling arrays
+                               "scale_BFGS": np.array([1e3, -3, 1, 1e3, -5, 1])}} #dictionary with initial guess and scaling arrays
 
 #MonteCarlo bias analysis
-n_spectra = 1e2 #number of MC simulations
+n_spectra = 1e1 #number of MC simulations
 verbose = False
 proc_parallel = True #compute the simulations in parallel
 cores = -1 #number of cores (-1 utilizes all)
@@ -73,13 +75,9 @@ if __name__ == '__main__':
     params = fitting_utils.function_handlers[model.lower()]["fit_params"]
 
     print(f'[IdentifiabilityAnalysis] Uncertainty:')
-    print("-" * 72)
-    print(f"{'Parameter':<12} | {'Theta REAL':<15} | {'Theta mean':<15} | {'Rel. bias':<12} | {'CRLB':<12}")
-    print("-" * 72)
     for name, val_real, val_phys, err_abs, rel_bias, err_pct in zip(params, theta*scaling_array_BFGS,
                                                 fit_mean, fit_std, relat_bias, sens_obj.rel_std):
         print(f"{name:<12} | {val_real} | {val_phys} ± {err_abs} | ± {rel_bias} | {err_pct}")
-    print("-" * 72)
 
     #Nyquist plots with measured and fitted data
     fig, ax = plt.subplots()

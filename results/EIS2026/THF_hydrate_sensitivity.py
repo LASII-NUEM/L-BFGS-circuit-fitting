@@ -14,15 +14,15 @@ model = "LongoRed2020" #which ECM will be used to fit the data
 reject_freqs = 100 #reject all frequencies up to the given argument
 
 #initial arguments
-circuits = {"LongoAdp2020": {"guess": np.array([1, 1, 1, 1, 1, 1, 0.5]),
-                             "scale_BFGS": np.array([1e5, 1e-7, 1e-4, 1e-9, 1e6, 1e-8, 1])},
+circuits = {"Longo2020": {"guess": np.array([1, 1, 1, 1, 1, 1, 0.5, 1]),
+                          "scale_BFGS": np.array([1e5, 1e-4, 1e-2, 1e-11, 1e5, 1, 1, 1e-8])},
+            "LongoAdp2020": {"guess": np.array([1, 1, 1, 1, 1, 1, 0.5]),
+                             "scale_BFGS": np.array([1e5, 1e-8, 1e-6, 1e-10, 1e5, 1e-9, 1])},
             "LongoRed2020": {"guess": np.array([1, 1, 1, 0.5]),
-                             "scale_BFGS": np.array([1e-9, 1e6, 1e-8, 1])},
-            "LongoLog2020": {"guess": np.array([1, 1, 1, 1, 1, 1, 0.5]),
-                             "scale_BFGS": np.array([1e5, 1e-7, 1e-3, 1e-9, 1e5, -8, 1])}} #dictionary with initial guess and scaling arrays
+                             "scale_BFGS": np.array([1e-9, 1e6, 1e-8, 1])}} #dictionary with initial guess and scaling arrays
 
 #MonteCarlo bias analysis
-n_spectra = 1e1 #number of MC simulations
+n_spectra = 1e4 #number of MC simulations
 verbose = False
 proc_parallel = True #compute the simulations in parallel
 cores = -1 #number of cores (-1 utilizes all)
